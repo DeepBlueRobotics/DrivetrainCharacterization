@@ -46,6 +46,7 @@ public class DrivetrainCharacterization {
                     velocities.add(v3); // Append average of the left and right motor velocities
 
                     if (left_velocities.size() >= spread) {
+                    	//System.out.println(left_velocities.size());
                     	double a1 = (v1 - left_velocities.get(left_velocities.size() - spread)) / (spread * 0.02);
                         double a2 = (v2 - right_velocities.get(right_velocities.size() - spread)) / (spread * 0.02);                                                                                            // right velocity
                         // System.out.println(a1 + "," + a2);
@@ -62,6 +63,7 @@ public class DrivetrainCharacterization {
         }
 
         // Do the same thing for filereader2 as filereader1
+        int previous_vel_size = left_velocities.size();
         try {
             Scanner filereader2 = new Scanner(new File(file2));
             while (filereader2.hasNext()) {
@@ -73,7 +75,8 @@ public class DrivetrainCharacterization {
                     double v3 = 0.5 * (v1 - v2);
                     velocities.add(v3);
 
-                    if (left_velocities.size() >= spread) {
+                    if ((left_velocities.size() - previous_vel_size) >= spread) {
+                    	//System.out.println(left_velocities.size());
                     	double a1 = (v1 - left_velocities.get(left_velocities.size() - spread)) / (spread * 0.02);
                         double a2 = (v2 - right_velocities.get(right_velocities.size() - spread)) / (spread * 0.02);
                         // System.out.println(a1 + "," + a2);
@@ -94,7 +97,8 @@ public class DrivetrainCharacterization {
         System.out.println(velocities.size());
         System.out.println(voltages.size());*/
         
-        for (int i = 0; i < spread; i++) {
+        int amt_to_remove = velocities.size() - accelerations.size();
+        for (int i = 0; i < amt_to_remove; i++) {
             velocities.remove(velocities.size() - 1);
             voltages.remove(voltages.size() - 1);
         }
@@ -190,6 +194,7 @@ public class DrivetrainCharacterization {
         }
 
         // Do the same thing for filereader2 as filereader1
+        int previous_vel_size = left_velocities.size();
         try {
             Scanner filereader2 = new Scanner(new File(file2));
             while (filereader2.hasNext()) {
@@ -201,7 +206,7 @@ public class DrivetrainCharacterization {
                     double v3 = 0.5 * (v1 - v2);
                     velocities.add(v3);
 
-                    if (left_velocities.size() >= 2) {
+                    if ((left_velocities.size() - previous_vel_size) >= 2) {
                         double a1 = 50 * (v1 - left_velocities.get(left_velocities.size() - 2));
                         double a2 = 50 * (v2 - right_velocities.get(right_velocities.size() - 2));
                         // System.out.println(a1 + "," + a2);
