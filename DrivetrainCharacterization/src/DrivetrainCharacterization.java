@@ -61,6 +61,12 @@ public class DrivetrainCharacterization {
         } catch (FileNotFoundException e) {
             System.out.println("The file being referenced may not exist. Error: " + e.toString());
         }
+        
+        int amt_to_remove = velocities.size() - accelerations.size();
+        for (int i = 0; i < amt_to_remove; i++) {
+            velocities.remove(velocities.size() - 1);
+            voltages.remove(voltages.size() - 1);
+        }
 
         // Do the same thing for filereader2 as filereader1
         int previous_vel_size = left_velocities.size();
@@ -97,7 +103,7 @@ public class DrivetrainCharacterization {
         System.out.println(velocities.size());
         System.out.println(voltages.size());*/
         
-        int amt_to_remove = velocities.size() - accelerations.size();
+        amt_to_remove = velocities.size() - accelerations.size();
         for (int i = 0; i < amt_to_remove; i++) {
             velocities.remove(velocities.size() - 1);
             voltages.remove(voltages.size() - 1);
